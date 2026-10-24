@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>Zitat {{AUTOR}}</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  :root { --w:{{BREITE}}px; --h:{{HOEHE}}px; --p:{{FARBE_PRIMAER}}; --s:{{FARBE_SEKUNDAER}}; --bg:{{FARBE_HINTERGRUND}}; --ink:{{FARBE_TEXT}}; --hell:{{FARBE_HELL}};
+         --u: calc(var(--w) / 100); }
+  html, body { margin:0; background:var(--bg); }
+  #root { position:relative; width:var(--w); height:var(--h); overflow:hidden; background:var(--bg); color:var(--ink); font-family:"{{SCHRIFT_FLIESSTEXT}}", sans-serif; }
+  .kreis { position:absolute; right:-18%; top:-18%; width:70%; padding-top:70%; border-radius:50%; background:var(--p); opacity:.10; transform:scale(.6); }
+  .inhalt { position:absolute; left:10%; right:10%; top:50%; transform:translateY(-50%); }
+  .anf { font-family:"{{SCHRIFT_UEBERSCHRIFT}}", serif; font-size:calc(var(--u) * 16); line-height:.6; color:var(--s); opacity:0; }
+  .zitat { font-family:"{{SCHRIFT_UEBERSCHRIFT}}", serif; font-size:calc(var(--u) * 5.2); line-height:1.25; font-weight:400; margin-top:calc(var(--u) * 2); }
+  .zitat span { display:inline-block; opacity:0; }
+  .autor { margin-top:calc(var(--u) * 4); font-size:calc(var(--u) * 2.8); color:var(--p); font-weight:700; letter-spacing:.04em; opacity:0; }
+  .autor::before { content:""; display:inline-block; width:calc(var(--u) * 5); height:2px; background:var(--s); vertical-align:middle; margin-right:calc(var(--u) * 1.5); }
+  .logo { display:{{LOGO_ANZEIGE}}; position:absolute; left:10%; bottom:7%; height:calc(var(--u) * 5); object-fit:contain; opacity:0; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="{{ID}}" data-start="0" data-width="{{BREITE}}" data-height="{{HOEHE}}" data-duration="{{DAUER}}">
+  <div class="kreis" id="kreis"></div>
+  <div class="inhalt">
+    <div class="anf" id="anf">„</div>
+    <div class="zitat" id="zitat">{{ZITAT}}</div>
+    <div class="autor" id="autor">{{AUTOR}}</div>
+  </div>
+  <img class="logo" id="logo" src="{{LOGO}}" alt="" />
+</div>
+<script>
+  const D = {{DAUER}};
+  // Zitat wortweise einblenden
+  const z = document.getElementById("zitat");
+  z.innerHTML = z.textContent.trim().split(/\s+/).map(w => `<span>${w}</span>`).join(" ");
+  const woerter = z.querySelectorAll("span");
+  const tl = gsap.timeline({ paused: true });
+  tl.to("#kreis", { scale: 1, duration: 1.2, ease: "power2.out" }, 0)
+    .to("#anf", { opacity: 1, duration: .4 }, .2)
+    .to(woerter, { opacity: 1, y: 0, duration: .35, stagger: Math.min(.09, 2.2 / Math.max(woerter.length, 1)), ease: "power2.out" }, .5)
+    .to("#autor", { opacity: 1, x: 0, duration: .5, ease: "power2.out" }, "-=.1")
+    .to("#logo", { opacity: 1, duration: .4 }, "<")
+    .to(".inhalt, #logo", { opacity: 0, duration: .5, ease: "power2.in" }, D - .55);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["{{ID}}"] = tl;
+</script>
+</body>
+</html>

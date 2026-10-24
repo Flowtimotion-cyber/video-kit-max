@@ -1,0 +1,12 @@
+out/
+renders/
+final/
+teile/
+bilder/
+node_modules/
+*.mp4
+*.mov
+*.webm
+*.srt
+!skills/**/*.md
+.DS_Store

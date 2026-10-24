@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>Intro {{MARKE}}</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  :root { --w:{{BREITE}}px; --h:{{HOEHE}}px; --p:{{FARBE_PRIMAER}}; --s:{{FARBE_SEKUNDAER}}; --bg:{{FARBE_HINTERGRUND}}; --ink:{{FARBE_TEXT}}; --hell:{{FARBE_HELL}};
+         --u: calc(var(--w) / 100); }
+  html, body { margin:0; background:var(--bg); }
+  #root { position:relative; width:var(--w); height:var(--h); overflow:hidden; background:var(--bg); color:var(--ink);
+          font-family:"{{SCHRIFT_FLIESSTEXT}}", sans-serif; }
+  .balken { position:absolute; left:0; top:0; width:100%; height:100%; background:var(--p); transform-origin:left center; }
+  .inhalt { position:absolute; left:8%; right:8%; top:50%; transform:translateY(-50%); }
+  .logo { display:{{LOGO_ANZEIGE}}; height:calc(var(--u) * 9); max-width:60%; object-fit:contain; margin-bottom:calc(var(--u) * 4); opacity:0; }
+  .titel { font-family:"{{SCHRIFT_UEBERSCHRIFT}}", serif; font-size:calc(var(--u) * 7.5); line-height:1.08; font-weight:700; color:var(--ink); opacity:0; }
+  .linie { width:calc(var(--u) * 10); height:calc(var(--u) * 0.6); background:var(--s); margin:calc(var(--u) * 2.5) 0; transform:scaleX(0); transform-origin:left; }
+  .unter { font-size:calc(var(--u) * 3.2); line-height:1.3; color:var(--ink); opacity:.85; opacity:0; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="{{ID}}" data-start="0" data-width="{{BREITE}}" data-height="{{HOEHE}}" data-duration="{{DAUER}}">
+  <div class="balken" id="balken"></div>
+  <div class="inhalt">
+    <img class="logo" id="logo" src="{{LOGO}}" alt="" />
+    <div class="titel" id="titel">{{TITEL}}</div>
+    <div class="linie" id="linie"></div>
+    <div class="unter" id="unter">{{UNTERTITEL}}</div>
+  </div>
+</div>
+<script>
+  const D = {{DAUER}};
+  const tl = gsap.timeline({ paused: true });
+  // Farbbalken wischt rein und wieder raus, darunter erscheint der Inhalt
+  tl.fromTo("#balken", { scaleX: 0 }, { scaleX: 1, duration: .55, ease: "power3.inOut" }, 0)
+    .set("#balken", { transformOrigin: "right center" }, .6)
+    .to("#balken", { scaleX: 0, duration: .55, ease: "power3.inOut" }, .6)
+    .to("#logo", { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, .9)
+    .fromTo("#titel", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .6, ease: "power3.out" }, 1.0)
+    .to("#linie", { scaleX: 1, duration: .45, ease: "power2.out" }, 1.4)
+    .fromTo("#unter", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: "power2.out" }, 1.6)
+    .to(".inhalt", { opacity: 0, y: -10, duration: .5, ease: "power2.in" }, D - .6);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["{{ID}}"] = tl;
+</script>
+</body>
+</html>

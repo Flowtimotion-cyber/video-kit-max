@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>Outro {{MARKE}}</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  :root { --w:{{BREITE}}px; --h:{{HOEHE}}px; --p:{{FARBE_PRIMAER}}; --s:{{FARBE_SEKUNDAER}}; --ink:{{FARBE_TEXT}}; --hell:{{FARBE_HELL}};
+         --u: calc(var(--w) / 100); }
+  html, body { margin:0; background:var(--p); }
+  #root { position:relative; width:var(--w); height:var(--h); overflow:hidden; background:var(--p); color:var(--hell); font-family:"{{SCHRIFT_FLIESSTEXT}}", sans-serif; text-align:center; }
+  .inhalt { position:absolute; left:8%; right:8%; top:50%; transform:translateY(-50%); }
+  .logo { display:{{LOGO_ANZEIGE}}; height:calc(var(--u) * 12); max-width:70%; object-fit:contain; margin:0 auto calc(var(--u) * 3); opacity:0; }
+  .marke { font-family:"{{SCHRIFT_UEBERSCHRIFT}}", serif; font-size:calc(var(--u) * 6.5); font-weight:700; line-height:1.1; opacity:0; }
+  .claim { font-size:calc(var(--u) * 2.8); line-height:1.35; margin-top:calc(var(--u) * 1.8); opacity:0; }
+  .web { display:inline-block; margin-top:calc(var(--u) * 4); padding:calc(var(--u) * 1.2) calc(var(--u) * 3); border-radius:999px; background:var(--s); color:var(--ink); font-weight:700; font-size:calc(var(--u) * 2.6); opacity:0; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="{{ID}}" data-start="0" data-width="{{BREITE}}" data-height="{{HOEHE}}" data-duration="{{DAUER}}">
+  <div class="inhalt">
+    <img class="logo" id="logo" src="{{LOGO}}" alt="" />
+    <div class="marke" id="marke">{{MARKE}}</div>
+    <div class="claim" id="claim">{{CLAIM}}</div>
+    <div class="web" id="web">{{WEBSITE}}</div>
+  </div>
+</div>
+<script>
+  const D = {{DAUER}};
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#logo", { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: .6, ease: "back.out(1.6)" }, .1)
+    .fromTo("#marke", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, .5)
+    .fromTo("#claim", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, .8)
+    .fromTo("#web", { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, duration: .45, ease: "back.out(1.8)" }, 1.2)
+    .to(".inhalt", { opacity: 0, duration: .5, ease: "power2.in" }, D - .55);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["{{ID}}"] = tl;
+</script>
+</body>
+</html>

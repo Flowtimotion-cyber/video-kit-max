@@ -1,0 +1,41 @@
+{
+  "_hinweis": "Einmal ausfüllen. Alle Skills lesen diese Datei. Farben als Hex (#RRGGBB). Logo-Dateien nach brand/logo/ legen.",
+  "name": "DEINE MARKE",
+  "claim": "Ein Satz, der unter dem Logo stehen darf",
+  "website": "www.deine-seite.de",
+  "farben": {
+    "primaer": "#1F6F5F",
+    "sekundaer": "#E8B86D",
+    "hintergrund": "#F6F1EA",
+    "text": "#1B1B1B",
+    "hell": "#FFFFFF"
+  },
+  "schrift": {
+    "ueberschrift": "Georgia",
+    "fliesstext": "Arial",
+    "_hinweis": "Systemschriften funktionieren überall. Eigene Schrift: Datei nach brand/fonts/ legen und hier den Namen eintragen."
+  },
+  "logo": {
+    "hell": "brand/logo/logo-hell.png",
+    "dunkel": "brand/logo/logo-dunkel.png"
+  },
+  "untertitel": {
+    "stil": "custom",
+    "force_style": "FontName=Arial,FontSize=22,Bold=1,PrimaryColour=&H00FFFFFF,OutlineColour=&H005F6F1F,BackColour=&H80000000,Outline=2,Shadow=0,Alignment=2,MarginV=60",
+    "_hinweis": "ASS-Farben sind BGR mit &H00 davor: Hex #1F6F5F wird zu &H005F6F1F. Alignment 2 = unten mittig, 5 = Mitte, 8 = oben."
+  },
+  "tonalitaet": {
+    "ansprache": "du",
+    "stimmung": "warm, ruhig, nahbar",
+    "vermeiden": ["Marketing-Floskeln", "Druck", "Superlative"]
+  },
+  "formate": {
+    "reels": {"breite": 1080, "hoehe": 1920},
+    "quadrat": {"breite": 1080, "hoehe": 1080},
+    "breit": {"breite": 1920, "hoehe": 1080}
+  },
+  "freigabe": {
+    "personen_im_bild": "Nur veröffentlichen, wenn die Einwilligung vorliegt (Teilnehmende, Referenzgeber).",
+    "ki_bilder_kennzeichnen": true
+  }
+}
